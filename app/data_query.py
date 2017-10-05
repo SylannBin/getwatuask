@@ -1,5 +1,6 @@
 from psycopg2 import Error, connect
 
+
 def create_connection():
     """ create a database connection to the SQLite database
         specified by the db_file
@@ -14,6 +15,7 @@ def create_connection():
         print(e)
 
     return None
+
 
 def login(umail):
     """ Requête permettant l'identification d'un utilisateur. On vient comparer le PW de la db avec
@@ -32,10 +34,11 @@ def login(umail):
 
         data = cur.fetchall()[0]
         user = {'user_id': data[0], 'lastname': data[1], 'firstname': data[2],
-                 'mail': data[3], 'password': data[4]}
+                'mail': data[3], 'password': data[4]}
 
     print(user)
     return user
+
 
 def get_user_by_id(user_id):
     """ Requête permettant l'identification d'un utilisateur. On vient comparer le PW de la db avec
@@ -47,35 +50,39 @@ def get_user_by_id(user_id):
         cur = conn.cursor()
         try:
             print
-            cur.execute("SELECT * FROM utilisateur WHERE user_id = %s", (user_id,))
+            cur.execute(
+                "SELECT * FROM utilisateur WHERE user_id = %s", (user_id,))
         except Error as e:
             print("login_query : ", e)
             return None
 
         data = cur.fetchall()[0]
         user = {'user_id': data[0], 'lastname': data[1], 'firstname': data[2],
-                 'mail': data[3], 'password': data[4]}
+                'mail': data[3], 'password': data[4]}
 
     print(user)
     return user
+
 
 def get_client_by_id(client_id):
     with create_connection() as conn:
         cur = conn.cursor()
         try:
             print
-            cur.execute("SELECT * FROM client WHERE client_id = %s", (client_id,))
+            cur.execute(
+                "SELECT * FROM client WHERE client_id = %s", (client_id,))
         except Error as e:
             print("get_user_by_id : ", e)
             return None
 
         data = cur.fetchall()[0]
         client = {'client_id': data[0], 'name': data[1], 'address': data[2],
-                 'cp': data[3], 'city': data[4], 'country': data[5],
-                'phone': data[6], 'mail': data[7], 'id_user': data[8]}
+                  'cp': data[3], 'city': data[4], 'country': data[5],
+                  'phone': data[6], 'mail': data[7], 'id_user': data[8]}
 
     print(client)
     return client
+
 
 def get_needs_from_client(client_id):
     with create_connection() as conn:
@@ -94,6 +101,7 @@ def get_needs_from_client(client_id):
 
     print(need)
     return need
+
 
 def get_needs_from_user(id_user):
     """ Requête permettant de récupérer tous les besoins d'un utilisateur sans filtre particuliers.
@@ -118,8 +126,25 @@ def get_needs_from_user(id_user):
     print(needs)
     return needs
 
-#TODO : Finish this query
-def get_filter_needs(filters, user_id):
+# TODO : Finish this query
+
+
+def get_filter_needs(user_id, args, states):
+    sql = ""
+    if states:
+        sql += "AND id_status IN ", states
+    if args['create_date']:
+        sql += " AND creation_date = '", args['create_date'], "' "
+
+    if args['latest_date']:
+        sql += " AND latest_date = '", args['latest_date'], "' "
+
+    if args['client_name']:
+        sql += " AND c_name ILIKE '%", args['client_name'], "%' "
+
+    if args['title_need']:
+        sql += " AND title ILIKE '%", args['title_need'], "%' "
+
     with create_connection() as conn:
         cur = conn.cursor()
         try:
@@ -127,7 +152,7 @@ def get_filter_needs(filters, user_id):
                         "JOIN status ON (need.status_id = status.status_id) "
                         "JOIN client ON (client.client_id = need.client_id) "
                         "JOIN utilisateur ON (utilisateur.user_id = need.user_id) "
-                        "WHERE need.user_id = %s " + filters +
+                        "WHERE need.user_id = %s " + sql +
                         "ORDER BY need.status_id ASC, latest_date DESC", (user_id,))
         except Error as e:
             print("get_filter_needs_query : ", e)
@@ -135,6 +160,7 @@ def get_filter_needs(filters, user_id):
 
     print(needs_filtered)
     return needs_filtered
+
 
 def get_need_by_id(need_id):
     """ Select un besoin spécifique pour l'affiche
@@ -155,6 +181,7 @@ def get_need_by_id(need_id):
     print(need)
     return need
 
+
 def insert_need(title, description, creation_date, latest_date, month_duration,
                 day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
     with create_connection() as conn:
@@ -166,17 +193,18 @@ def insert_need(title, description, creation_date, latest_date, month_duration,
             print("MAX : ", max_id)
 
             cur.execute("INSERT INTO need (need_id, title, description, creation_date, latest_date, "
-                    "month_duration, day_duration, price_ht, consultant_name, client_id, "
-                    "status_id, active, user_id, key_factors) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, TRUE, %s, %s)",
+                        "month_duration, day_duration, price_ht, consultant_name, client_id, "
+                        "status_id, active, user_id, key_factors) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, TRUE, %s, %s)",
                         (max_id, title, description, creation_date, latest_date, month_duration,
-                        day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors))
+                         day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors))
         except Error as e:
             print("insert_need_query : ", e)
 
     return None
 
+
 def update_need(need_id, title, description, creation_date, latest_date, month_duration,
-                      day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
+                day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
     with create_connection() as conn:
         cur = conn.cursor()
 
@@ -195,11 +223,12 @@ def update_need(need_id, title, description, creation_date, latest_date, month_d
                         "key_factors = %s "
                         "WHERE need_id = %s",
                         (title, description, creation_date, latest_date, month_duration,
-                      day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors, need_id))
+                         day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors, need_id))
         except Error as e:
             print("update_need : ", e)
 
     return None
+
 
 def delete_need(need_id):
     """ Requête permettant de passer un need en inactif (= supprimer).
@@ -208,24 +237,24 @@ def delete_need(need_id):
     with create_connection() as conn:
         cur = conn.cursor()
         try:
-            cur.execute("UPDATE need SET active = FALSE where id_need = %s", (need_id,))
+            cur.execute(
+                "UPDATE need SET active = FALSE where id_need = %s", (need_id,))
         except Error as e:
             print("delete_need_query : ", e)
 
     return None
 
+
 if __name__ == "__main__":
     pass
     login("valentinmele@gfi.com")
-    #get_user_by_id(1)
-    #get_client_by_id(1)
-    #get_needs_from_client(1)
-    #get_needs_from_user(1)
-    #get_filter_needs()
-    #get_need_by_id(2)
-    insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02", 2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1, "JOLIE, BLEU, RAPIDE")
-    #update_need()
-    #delete_need()
-
-
-
+    # get_user_by_id(1)
+    # get_client_by_id(1)
+    # get_needs_from_client(1)
+    # get_needs_from_user(1)
+    # get_filter_needs()
+    # get_need_by_id(2)
+    insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02",
+                2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1, "JOLIE, BLEU, RAPIDE")
+    # update_need()
+    # delete_need()

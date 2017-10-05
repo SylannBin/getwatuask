@@ -47,6 +47,7 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('login'), code=302)
 
+
 @app.route('/needs')
 def get_needs():
     user_id = session['user']['user_id']
@@ -67,48 +68,29 @@ def get_needs():
     return render_template('need-list.html', user=user, needs=needs, total=len(needs)), 200
 
 
-@app.route('/filtered_needs', methods=['GET', 'POST'])
+@app.route('/filtered_needs')
 def get_filtered_needs():
 
     user_id = session['user']['id_user']
     user = db.get_user_by_id(user_id)
-    filters = ""
-
-    states_list = []
-    # Method POST
-    if request.form.get('open'):
-        states_list.append(1)
-    if request.form.get('win'):
-        states_list.append(2)
-    if request.form.get('lost'):
-        states_list.append(3)
-
-    states = tuple(states_list)
-    filters += "AND id_status IN ", states
-
-    create_date = request.form.get('initialDate')
-    latest_date = request.form.get('dueDate')
-    client_name = request.form.get('clientName')
-    title_need = request.form.get('titleNeed')
-
-    if create_date:
-        filters += " AND creation_date = '", create_date, "' "
-
-    if latest_date:
-        filters += " AND latest_date = '", latest_date, "' "
-
-    if client_name:
-        filters += " AND c_name ILIKE '%", client_name, "%' "
-
-    if title_need:
-        filters += " AND title ILIKE '%", title_need, "%' "
-
-    filtered_needs = db.get_filter_needs(filters, user_id)
 
     if user is None:
         msg = "Couldn't get user N°" + user_id
         return render_template('403.html', msg=msg, route='get_needs'), 403
 
+    states = []
+    states.add = request.args.get('open')
+    states.add = request.args.get('win')
+    states.add = request.args.get('lost')
+    args['create_date'] = request.args.get('initialDate')
+    args['latest_date'] = request.args.get('dueDate')
+    args['client_name'] = request.args.get('clientName')
+    args['title_need'] = request.args.get('titleNeed')
+
+    states = [arg for arg in states if arg is not None]
+    args = [arg for arg in args if arg is not None]
+
+    filtered_needs = db.get_filter_needs(user_id, args, states)
 
     if filtered_needs is None:
         msg = "Couldn't find filtered needs."
@@ -117,11 +99,7 @@ def get_filtered_needs():
     for need in filtered_needs:
         need['remaining'] = (need['release'] - need['date']).days
 
-    return render_template('need-list.html', user=user, needs=filtered_needs), 2007
-
-
-
-
+    return render_template('need-list.html', user=user, needs=filtered_needs), 200
 
 
 @app.route('/client/<client_id>/<need_id>/<qr_code_salt>')
