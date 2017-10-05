@@ -1,6 +1,4 @@
-alert("COUCOU");
 $(document).ready(function(){
-console.dir($(this));
   var heightScreen=window.innerHeight;
 
   $("#hiddenPart").css('height', heightScreen);
