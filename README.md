@@ -1,28 +1,40 @@
 # WORKSHOP B3 2017 - GetWatuAsk
 
-## Dev Server preparation
+## Setup
 
-### Linux setup
+### Linux
 - $ sudo apt-get install python3
 - $ sudo apt-get install python3-venv
 - $ pip install -U pip
 - $ python3 -m venv .venv
 - $ source .venv/bin/activate
 - $ pip install -r requirements.txt
+- $ export FLASK_APP=app/app.py
 
 ### Windows
 First use installer for python3, then in cmd.exe:
 - pip install -U pip
 - pip install virtualenv
 - python -m virtualenv .venv
-- set .venv/Scripts/activate
+- .venv/Scripts/activate
 - pip install -r requirements.txt
+- SET FLASK_APP=app/app.py
 
-### Launch app (dev)
+### Mac
+- brew install python
+- pip3 install virtualenv
+- python3 -m virtualenv .venv
+- source .venv/bin/activate
+- pip install -r requirements.txt
 - export FLASK_APP=app/app.py
+
+## Launch app (dev)
 - flask run --reload
 
-### Postgresql setup
+## Postgresql setup
+Get postgresql
+Get pgadmin (GUI for postgresql)
+
 - Create a new role with super user rights and prompt for password
 `psql createuser -P -s -e <UserName>`
 - Create a new database:
