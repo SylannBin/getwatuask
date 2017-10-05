@@ -1,0 +1,35 @@
+#hidedPart{
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+form{
+	width: 100%;
+	margin: 0 auto;
+	color: white;
+	padding: 20px 0 0 10px;
+}
+
+#searchBar{
+	width:80%;
+	height:30px;
+	margin-left: 0px;
+}
+
+form .glyphicon-search{
+	width: 5%;
+	font-size: 25px;
+	text-align: center;
+	padding: 20px 2px 2px 2px;
+	position: absolute;
+}
+
+form a{
+	color:white;
+}
+
+#selectsButtons {
+	margin-left: 50px;
+}
+#selectsButtons label{
+	margin: 0 70px 0 5px;
+}
