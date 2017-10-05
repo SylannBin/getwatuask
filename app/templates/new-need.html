@@ -10,8 +10,8 @@ Snap-AT - New Need
 {% block content %}
 
 	<header>
-		<img src="{{ url_for('new_need', filename='img/GFI-logo.png') }}">
-		<span id="spanName">{{ params.consultant_name }} - New Project</span> 
+        <img src="{{ url_for('static', filename='img/GFI-logo.png') }}">
+        <span id="spanName">{{ user.firstname }} - New Project</span>
 	</header>
 
 	<a href="{{ url_for('get_needs') }}">
@@ -22,13 +22,13 @@ Snap-AT - New Need
 
 	<form method="post" action="{{ url_for('new_need') }}" enctype="multipart/form-data">
 		<legend>New need registration</legend>
-		<input type="hidden" name="creation_date" value="{{ params.today }}"><br>
+		<input type="hidden" name="creation_date" value="{{ params.today }}" placeholder="creationDate"><br>
 		<input type="hidden" name="user_id" value="{{ params.user_id }}"><br>
 		<input type="hidden" name="consultant_name" value="{{ params.consultant_name }}"><br>
 
 		<input type="text" id="title" name="title" placeholder="Title" value=""><br>
 		<input type="text" id="description" name="description" placeholder="Description" value=""><br>
-		<textarea name="description" id="description"></textarea><br>
+		<textarea name="consultant_name" id="consultant_name" placeholder="ConsultantName"></textarea><br>
 		<label for="latest_date"><input type="date" id="latest_date" name="latest_date" placeholder="Due date" value="" class="inputDates"><span class="glyphicon glyphicon-calendar"></span></label><br>
 		<input type="text" id="month_duration" name="month_duration" placeholder="Month duration" value=""><br>
 		<input type="text" id="day_duration" name="day_duration" placeholder="Day duration" value=""><br>

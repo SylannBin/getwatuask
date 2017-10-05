@@ -147,8 +147,9 @@ def new_need():
 
         clients = db.get_clients()
         params['clients'] = clients if clients else []
+        user = session['user']
 
-        return render_template('new-need.html', params=params), 200
+        return render_template('new-need.html', params=params, user=user), 200
 
     # Method POST:
     session['user']['last_insert_need_id'] = db.insert_need(
