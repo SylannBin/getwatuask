@@ -6,3 +6,5 @@ __pycache__
 *.db
 *.sql
 *.pyc
+.DS_Store
+
