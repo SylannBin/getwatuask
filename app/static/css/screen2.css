@@ -1,3 +1,7 @@
+html{
+	height: 100%;
+}
+
 header{
 	position: fixed;
 	height: 70px;
@@ -82,6 +86,7 @@ body{
 	background-image: url("../img/bgNeed.jpg");
 	background-size: cover;
 	background-position: right;
+	background-repeat: no-repeat;
 }
 
 form{
@@ -185,6 +190,10 @@ form input#send{
 	background-color: rgba(0, 0, 0, 0.3);
 	position: absolute;
     right: 5%;
+}
+
+form input#send:focus{
+	display: none;
 }
 
 

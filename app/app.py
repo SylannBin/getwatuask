@@ -124,17 +124,23 @@ def edit_need(need_id=None):
     return "Not implemented yet", 404
 
 
-# GET Argument: manager_name
-# POST body: 'NEED' form data
 @app.route('/needs/new', methods=['GET', 'POST'])
 def new_need():
     if request.method == 'GET':
-        # BONUS: request.args.get('token') token must be valid (manager or admin)
-        params = {'manager': request.args.get('manager_name'),
-                  'date': dt.date.today()}
-        return render_template('need-form.html', params=params), 200
-    # TODO: Handle form data to create a new need in db
-    return "Not implemented yet", 404
+        params = {'consultant_name': request.args.get('consultant_name'),
+                  'user_id': session['user']['user_id'],
+                  'today': dt.date.today()}
+
+        clients = db.get_clients()
+        params['clients'] = clients if clients else []
+
+        return render_template('new-need.html', params=params), 200
+
+    # Method POST:
+    session['user']['last_insert_need_id'] = db.insert_need(
+        request.form.to_dict())
+
+    return redirect(url_for('get_needs'), code=302)
 
 
 if __name__ == '__main__':

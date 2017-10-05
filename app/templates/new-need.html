@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+Snap-AT - New Need
+{% endblock %}
+
+{% block cssPLUS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/screen3.css') }}">
+{% endblock %}
+
+{% block content %}
+
+	<header>
+		<img src="{{ url_for('new_need', filename='img/GFI-logo.png') }}">
+		<span id="spanName">{{ params.consultant_name }} - New Project</span> 
+	</header>
+
+	<a href="{{ url_for('get_needs') }}">
+		<div class="returnBackArrow">
+			<span class="glyphicon glyphicon-arrow-left"></span>
+		</div>
+	</a>
+
+	<form method="post" action="{{ url_for('new_need') }}" enctype="multipart/form-data">
+		<legend>New need registration</legend>
+		<input type="hidden" name="creation_date" value="{{ params.today }}"><br>
+		<input type="hidden" name="user_id" value="{{ params.user_id }}"><br>
+		<input type="hidden" name="consultant_name" value="{{ params.consultant_name }}"><br>
+
+		<input type="text" id="title" name="title" placeholder="Title" value=""><br>
+		<input type="text" id="description" name="description" placeholder="Description" value=""><br>
+		<textarea name="description" id="description"></textarea><br>
+		<label for="latest_date"><input type="date" id="latest_date" name="latest_date" placeholder="Due date" value="" class="inputDates"><span class="glyphicon glyphicon-calendar"></span></label><br>
+		<input type="text" id="month_duration" name="month_duration" placeholder="Month duration" value=""><br>
+		<input type="text" id="day_duration" name="day_duration" placeholder="Day duration" value=""><br>
+		<label for="number">Valeur <span class="euroDevise"></span></label>
+		<input type="number" id="price_ht" name="price_ht" placeholder="Price € (HT)" value=""><br>
+		<label for="client_id">Client</label>
+		<select id="client_id" name="client_id">
+			{% for client in params.clients %}
+				<option value="{{ client[0] }}">{{ client[1] }}</option>
+			{% endfor%}
+		</select><br>
+		<label for="status_id">Status</label>
+		<select id="status_id" name="status_id">
+			<option selected="selected" value="1">Open</option>
+			<option value="2">Win</option>
+			<option value="3">Lost</option>
+		</select><br>
+		<input type="text" id="key_factors" name="key_factors" placeholder="3 (comma separated) Key factors" value=""><br>
+		<input type="file" id="attachedFile" name="attachedFile"><br>
+		
+		<input id="send" type="submit" value="Register &amp; Share">
+	</form>
+
+{% endblock %}

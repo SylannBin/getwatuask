@@ -1,5 +1,11 @@
+html{
+	height: 100%;
+}
+
 body{
 	background-image: url('../img/new.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 header{
@@ -50,9 +56,14 @@ form input{
 	width: 100%;
 	height: 50px;
 	margin: 10px 0;
-	font-size: 24px;
-	color: black;
+    color: white;
+    padding-left: 15px;
+    font-size: 24px;
+	outline-color: #FF851F;
+	background-color: rgba(255,255,255,0.4);
 }
+
+
 .inputDates{
 	width: 85%;
 }
@@ -72,6 +83,13 @@ form textarea{
 	width: 100%;
 	margin: 10px 0;
 	font-size: 25px;
+	outline-color: #FF851F;
+	background-color: rgba(255,255,255,0.4);
+	border-top: 2px solid #999999; 
+	border-left: 2px solid #999999; 
+	border-bottom: 2px solid white; 
+	border-right: 2px solid white;
+	color: white;
 }
 
 select{
@@ -81,20 +99,22 @@ select{
 }
 
 form #attachedFile{
-	background-color: white;
 	padding-top: 6px;
+	outline-color: #FF851F;
+	background-color: rgba(255,255,255,0.4);
+	border: 2px solid #FF851F;
+	color: white;
 }
 
 form #selectStatus{
 	position: relative;
 	font-size: 20px;
-
 	height: 50px;
-	background-color: white;
-}
-
-form #selectStatus option{
-	text-align: center;
+	color: white;
+	outline-color: #FF851F;
+	background-color: rgba(255,255,255,0.4);
+	border: 2px solid #FF851F;
+	text-transform: uppercase;
 }
 
 span.euroDevise:before{
@@ -103,4 +123,24 @@ span.euroDevise:before{
 
 span.dollarsDevise:before{
 	content: "$";
+}
+
+input#send{
+	width: 20%;
+	margin-right: 15%;
+	display: inline-block;
+	position: absolute;
+	right: 0%;
+	text-align: center;
+	font-size: 27px;
+	padding: 5px 3px;
+	border-radius: 5px;
+	font-weight: bold;
+	border-bottom: 2px solid #FF851F;
+	border-right: 2px solid #FF851F;
+	color: #FFFCFF;
+	height: 50px;
+	text-transform: uppercase;
+	text-shadow: 2px 1px #888888;
+	background-color: rgba(0, 0, 0, 0.3);
 }
