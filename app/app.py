@@ -48,58 +48,31 @@ def logout():
     return redirect(url_for('login'), code=302)
 
 
-@app.route('/needs')
+@app.route('/needs', methods=['GET', 'POST'])
 def get_needs():
     user_id = session['user']['user_id']
     user = db.get_user_by_id(user_id)
     if user is None:
-        msg = "Couldn't get user N°" + user_id
+        msg = "Couldn't get user N°{}".format(user_id)
         return render_template('403.html', msg=msg, route='get_needs'), 403
 
-    needs = db.get_needs_from_user(user_id)
+    args = {}
+    args['states'] = request.form.get('state')
+    args['create_date'] = request.form.get('initialDate')
+    args['latest_date'] = request.form.get('dueDate')
+    args['client_name'] = request.form.get('clientName')
+    args['title_need'] = request.form.get('titleNeed')
+
+    needs = db.get_needs_from_user(user_id, args)
 
     if needs is None:
-        msg = "Couldn't get needs for user N°" + user_id
+        msg = "Couldn't get needs for user N°{}".format(user_id)
         return render_template('403.html', msg=msg, route='get_needs'), 403
 
     for need in needs:
         need['remaining'] = (need['latest_date'] - need['creation_date']).days
 
     return render_template('need-list.html', user=user, needs=needs, total=len(needs)), 200
-
-
-@app.route('/filtered_needs')
-def get_filtered_needs():
-
-    user_id = session['user']['id_user']
-    user = db.get_user_by_id(user_id)
-
-    if user is None:
-        msg = "Couldn't get user N°" + user_id
-        return render_template('403.html', msg=msg, route='get_needs'), 403
-
-    states = []
-    states.add = request.args.get('open')
-    states.add = request.args.get('win')
-    states.add = request.args.get('lost')
-    args['create_date'] = request.args.get('initialDate')
-    args['latest_date'] = request.args.get('dueDate')
-    args['client_name'] = request.args.get('clientName')
-    args['title_need'] = request.args.get('titleNeed')
-
-    states = [arg for arg in states if arg is not None]
-    args = [arg for arg in args if arg is not None]
-
-    filtered_needs = db.get_filter_needs(user_id, args, states)
-
-    if filtered_needs is None:
-        msg = "Couldn't find filtered needs."
-        return render_template('403.html', msg=msg, route='get_needs'), 403
-
-    for need in filtered_needs:
-        need['remaining'] = (need['release'] - need['date']).days
-
-    return render_template('need-list.html', user=user, needs=filtered_needs), 200
 
 
 @app.route('/client/<client_id>/<need_id>/<qr_code_salt>')
@@ -116,7 +89,7 @@ def client_need(client_id, need_id, qr_code_salt):
 def view_need(need_id):
     need = db.get_need_by_id(need_id)
     if need is None:
-        msg = "Couldn't get need N°" + need_id
+        msg = "Couldn't get need N°{}".format(need_id)
         return render_template('403.html', msg=msg, route='get_needs'), 403
 
     return render_template('view.html', need=need), 200
@@ -145,7 +118,7 @@ def edit_need(need_id=None):
     request.form.get('data')
 
     if need is None:
-        msg = "Couldn't get need N°" + need_id
+        msg = "Couldn't get need N°{}".format(need_id)
         return render_template('403.html', msg=msg, route='edit_need'), 403
 
     return "Not implemented yet", 404

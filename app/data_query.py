@@ -8,7 +8,8 @@ def create_connection():
     :return: Connection object or None
     """
     try:
-        conn = connect("dbname='snapat' user='postgres' password='postgres'")
+        conn = connect("dbname='snapat' user='kiminonaha'"
+                       "password='md5745db04ffd8f2d15e2a3682b496f747b'")
         print("Conn : ", conn)
         return conn
     except Error as e:
@@ -103,11 +104,13 @@ def get_needs_from_client(client_id):
     return need
 
 
-def get_needs_from_user(id_user):
+def get_needs_from_user(id_user, args=None):
     """ Requête permettant de récupérer tous les besoins d'un utilisateur sans filtre particuliers.
     Ils sont triés par OPEN et date au plus tard
     :return need_list: Liste de tous les needs actifs
     """
+    filters = get_filters(args)
+
     with create_connection() as conn:
         cur = conn.cursor()
         try:
@@ -115,51 +118,41 @@ def get_needs_from_user(id_user):
                         "JOIN status ON (need.status_id = status.status_id) "
                         "JOIN client ON (client.client_id = need.client_id) "
                         "JOIN utilisateur ON (utilisateur.user_id = need.user_id) "
-                        "WHERE need.user_id = %s "
-                        "AND active = TRUE "
+                        "WHERE need.user_id = %s" + filters + " AND active = TRUE "
                         "ORDER BY need.status_id ASC, latest_date DESC", (id_user,))
+            datalist = cur.fetchall()
         except Error as e:
             print("get_all_needs_query : ", e)
+            return None
+        finally:
+            cur.close()
 
-        needs = [{'client_name': row[0], 'title': row[1], 'latest_date': row[2],
-                  'label_status': row[3], 'need_id': row[4], 'creation_date': row[5]} for row in cur.fetchall()]
-    print(needs)
+        needs = [{
+            'client_name': row[0],
+            'title': row[1],
+            'latest_date': row[2],
+            'label_status': row[3],
+            'need_id': row[4],
+            'creation_date': row[5]} for row in datalist]
     return needs
 
-# TODO : Finish this query
 
-
-def get_filter_needs(user_id, args, states):
-    sql = ""
-    if states:
-        sql += "AND id_status IN ", states
-    if args['create_date']:
-        sql += " AND creation_date = '", args['create_date'], "' "
-
-    if args['latest_date']:
-        sql += " AND latest_date = '", args['latest_date'], "' "
-
-    if args['client_name']:
-        sql += " AND c_name ILIKE '%", args['client_name'], "%' "
-
-    if args['title_need']:
-        sql += " AND title ILIKE '%", args['title_need'], "%' "
-
-    with create_connection() as conn:
-        cur = conn.cursor()
-        try:
-            cur.execute("SELECT c_name, title, latest_date, need.status_id, need_id FROM need "
-                        "JOIN status ON (need.status_id = status.status_id) "
-                        "JOIN client ON (client.client_id = need.client_id) "
-                        "JOIN utilisateur ON (utilisateur.user_id = need.user_id) "
-                        "WHERE need.user_id = %s " + sql +
-                        "ORDER BY need.status_id ASC, latest_date DESC", (user_id,))
-        except Error as e:
-            print("get_filter_needs_query : ", e)
-            needs_filtered = cur.fetchall()
-
-    print(needs_filtered)
-    return needs_filtered
+def get_filters(args):
+    filters = ""
+    if args is None:
+        return filters
+    if args['states']:
+        filters += " AND need.status_id IN ({})".format(
+            ", ".join(args['states']))
+    if args.get('create_date'):
+        filters += " AND creation_date = '{}'".format(args['create_date'])
+    if args.get('latest_date'):
+        filters += " AND latest_date = '{}'".format(args['latest_date'])
+    if args.get('client_name'):
+        filters += " AND c_name ILIKE '%{}%'".format(args['client_name'])
+    if args.get('title_need'):
+        filters += " AND title ILIKE '%{}%'".format(args['title_need'])
+    return filters
 
 
 def get_need_by_id(need_id):

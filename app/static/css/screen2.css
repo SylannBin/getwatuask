@@ -187,10 +187,6 @@ form input#send{
     right: 5%;
 }
 
-form input#send:focus{
-	display: none;
-}
-
 
 .needs{
 	z-index: 0;

@@ -3,8 +3,6 @@
 Snap-AT - Liste des besoins
 {% endblock %}
 
-
-
 {% block cssPLUS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/screen2.css') }}">
 {% endblock %}
@@ -12,7 +10,7 @@ Snap-AT - Liste des besoins
 {% block content %}
 
     <header>
-        <img src="{{ url_for('static', filename='img/GFI-logo.png') }}"><span id="spanName"><span>{{ user.firstname }}</span> - <span id="spanStatus"><span>Commercial</span>
+        <img src="{{ url_for('static', filename='img/GFI-logo.png') }}"><span id="spanName"><span>{{ user.firstname }}</span>
     </header>
 
     <div id="hamburger" class="closed">
@@ -28,26 +26,26 @@ Snap-AT - Liste des besoins
         </div>
     </a>
     <section id="hiddenPart">
-        <form method="get">
-            <input name="searchBar" id="searchBar" placeholder="Rechercher">
+        <form action="{{ url_for('get_needs') }}" method="post">
+            <input name="search_bar" id="searchBar" placeholder="Rechercher">
             <a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a><br/><br/>
             <div id="selectsButtons">
-                <input name="open" id="open" type="checkbox" value="1"><label for="open">Open</label>
-                <input name="win" id="win" type="checkbox" value="2"><label for="win">Win</label>
-                <input name="lost" id="lost" type="checkbox" value="3"><label for="lost">Lost</label><br/>
+                <input name="state" id="open" type="checkbox" value="1"><label for="open">Open</label>
+                <input name="state" id="win" type="checkbox" value="2"><label for="win">Win</label>
+                <input name="state" id="lost" type="checkbox" value="3"><label for="lost">Lost</label><br/>
             </div><br/>
             <label for="initialDate">Date de demande du besoin</label><br/>
-            <input class="dates" name="initialDate" id="initialDate" type="date" input="date" placeholder="initialDate">
+            <input class="dates" name="creation_date" id="initialDate" type="date" placeholder="initialDate">
             <div for="initialDate" class="divDatePicker">
                 <span for="initialDate" id="initialDatePicker" class="glyphicon glyphicon-calendar"></span>
             </div><br/><br/>
             <label for="dueDate">Deadline du besoin</label><br/>
-            <input class="dates" name="dueDate" id="dueDate" type="date" input="date" placeholder="dueDate">
+            <input class="dates" name="latest_date" id="dueDate" type="date" placeholder="dueDate">
             <div for="dueDate" class="divDatePicker">
                 <span for="dueDate" class="glyphicon glyphicon-calendar"></span>
             </div><br/><br/>
-            <input name="clientName" id="clientName" type="text" placeholder="Nom du client"><br/><br/>
-            <input name="titleNeed" id="titleNeed" type="text" placeholder="Titre du besoin"><br/><br/>
+            <input name="client_name" id="clientName" type="text" placeholder="Nom du client"><br/><br/>
+            <input name="title" id="titleNeed" type="text" placeholder="Titre du besoin"><br/><br/>
             <input id="send" type="submit" value="Appliquer">
         </form>
     </section>
@@ -57,7 +55,7 @@ Snap-AT - Liste des besoins
         {% for need in needs %}
         <a href="{{ url_for('edit_need', need_id=need.need_id) }}">
             <div class="need" id="test1">
-                <div class="dueDate">{{ need.creation_date }}</div>
+                <div class="dueDate">{{ need.creation_date.strftime('%Y %b %d') }}</div>
                 <div class="needContent"><span class="databaseProject">{{ need.title }}</span><br>
                     <span class="databaseName">{{ need.client_name }}</span><span class="databaseState">{{ need.label_status }}</span>
                 </div>

@@ -56,7 +56,3 @@ form input#send{
     background-color: rgba(0, 0, 0, 0.3);
 
 }
-
-form input#send:focus{
-    display: none;
-}

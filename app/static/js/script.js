@@ -11,7 +11,7 @@ $(document).ready(function(){
 	        "left": "0%"
 	    }, "slow");
 
-	  	$(hiddenPart).animate({
+	  	$("#hiddenPart").animate({
 	        "left": "-80%"
 	    }, "slow");
 	}else{
@@ -22,7 +22,7 @@ $(document).ready(function(){
 		   "left": "80%"
 		}, "slow");
 
-	  	$(hiddenPart).animate({
+	  	$("#hiddenPart").animate({
 	        "left": "0%"
 	    }, "slow");
 	}

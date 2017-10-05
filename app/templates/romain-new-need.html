@@ -19,8 +19,22 @@ Snap-AT - New-Need
 		</div>
 	</a>
 
+	<input type="text" id="title" name="title" placeholder="Title" value="{{ need.title}}"><br>
+	<input type="text" id="description" name="description" placeholder="Description" value="{{ need.description}}"><br>
+	<input type="text" id="creation_date" name="creation_date" placeholder="Creation date" value="{{ need.creation_date}}"><br>
+	<input type="text" id="latest_date" name="latest_date" placeholder="Latest date" value="{{ need.latest_date}}"><br>
+	<input type="text" id="month_duration" name="month_duration" placeholder="Month duration" value="{{ need.month_duration}}"><br>
+	<input type="text" id="day_duration" name="day_duration" placeholder="Day duration" value="{{ need.day_duration}}"><br>
+	<input type="text" id="price_ht" name="price_ht" placeholder="Price HT" value="{{ need.price_ht}}"><br>
+	<input type="text" id="consultant_name" name="consultant name" placeholder="Consultant_name" value="{{ need.consultant_name}}"><br>
+	<input type="text" id="client_id" name="client_id" placeholder="Client id" value="{{ need.client_id}}"><br>
+	<input type="text" id="status_id" name="status_id" placeholder="Status id" value="{{ need.status_id}}"><br>
+	<input type="text" id="active" name="active" placeholder="Active" value="{{ need.active}}"><br>
+	<input type="text" id="user_id" name="user_id" placeholder="User id" value="{{ need.user_id}}"><br>
+
 	<form method="post" action="" enctype="multipart/form-data">
 		<legend>Création d'un nouveau besoin</legend>
+
 		<input type="text" id="companysName" name="companysName" placeholder="NomDeLEntreprise" value="NomDeLEntreprise"><br>
 		<input type="text" id="consultantName" name="consultantName" placeholder="NomDuConsultant" value="NomDuConsultant"><br>
 		<input type="text" id="consultantMail" name="consultantMail" placeholder="MailDuConsultant" value="MailDuConsultant"><br>
