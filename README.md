@@ -2,43 +2,39 @@
 
 ## Dev Server preparation
 
-### Linux packages
-- sudo apt-get install python3
-- sudo apt-get install python3-venv
-- python3 -m venv .venv
+### Linux setup
+- $ sudo apt-get install python3
+- $ sudo apt-get install python3-venv
+- $ pip install -U pip
+- $ python3 -m venv .venv
+- $ source .venv/bin/activate
+- $ pip install -r requirements.txt
 
-### Setup environment
-- source .venv/bin/activate
+### Windows
+First use installer for python3, then in cmd.exe:
 - pip install -U pip
+- pip install virtualenv
+- python -m virtualenv .venv
+- set .venv/Scripts/activate
 - pip install -r requirements.txt
 
 ### Launch app (dev)
 - export FLASK_APP=app/app.py
 - flask run --reload
 
-## Work with Heroku
-In a terminal:
-
-- To connect to heroku with your account
-`heroku login`
-- To copy the project from heroku to your computer in the current folder
-`heroku git:clone -a getwatuask`
-- To Get the current content of the project from heroku
-`git pull heroku master`
-- To send your work to heroku (**make sure your work is valid before**)
-`git push heroku master`
-
 ### Postgresql setup
-
-- Create the database:
-`heroku addons:create heroku-postgresql:hobby-dev`
+- Create a new role with super user rights and prompt for password
+`psql createuser -P -s -e <UserName>`
+- Create a new database:
+`psql -c "createdb snapat"`
 - Test the newly created database in interactive mode:
-`heroku pg:psql`
+`psql snapat`
 - Exit the interactive mod with
 `\q`
-- 
-`heroku config`
-
+- Dump a database
+`pg_dump snapat > filename.sql`
+- Import a dumpfile into an existing database
+`psql snapat < filename.sql`
 
 ## Routes:
 - /
@@ -51,11 +47,21 @@ In a terminal:
 - /needs/new `GET` `POST`
 
 ## Language choices
-- Domain provider: Heroku
-- Versionning: Heroku CLI (integrated git)
+We had to change of Domain provider and database during the development, due to technical and skill limitations.
+
+- 1st Domain provider: Heroku
+- 2nd Domain provider: Always data
+- finally: No Domain provider :(
+
+- 1st: Versionning: Heroku CLI (integrated git)
+- 2nd: Github
+
 - Web server: GUnicorn
-- Database: SQLITE --> Technically impossible to user
-- Database: Postgresql
+- finally: Local Flask server
+
+- 1st Database: SQLITE
+- 2nd Database: Postgresql
+
 - Server-side scripts: Python3 (+ Micro framework Flask)
 - Template rendering: Jinja2
 - Client-side scripts: Javascript, Jquery
@@ -72,8 +78,6 @@ app/
         *.html
     *.py
 .gitignore
-Procfile
 README.md
 requirements.txt
-snapat.db
 ```
