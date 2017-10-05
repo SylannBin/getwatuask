@@ -6,7 +6,7 @@ body{
 	background-image: url('../img/new.jpeg');
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: fixed;
+    background-attachment: fixed;
 }
 
 header{
@@ -15,10 +15,11 @@ header{
 	width: 100%;
 	background-color: black;
 	top: 0;
-	font-size: 25px;
-	padding-left: 140px;
+	font-size: 1.2em;
+	padding-left: 100px;
 	color: #50575F;
 	z-index: 1;
+	overflow: hidden;
 }
 
 header img{
