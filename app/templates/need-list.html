@@ -10,7 +10,8 @@ Snap-AT - Liste des besoins
 {% block content %}
 
     <header>
-        <img src="{{ url_for('static', filename='img/GFI-logo.png') }}"><span id="spanName"><span>{{ user.firstname }}</span></span>
+        <img src="{{ url_for('static', filename='img/GFI-logo.png') }}">
+        <span id="spanName"><span>{{ user.firstname + " " + user.lastname }}</span></span>
     </header>
 
     <div id="hamburger" class="closed">

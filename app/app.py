@@ -5,10 +5,11 @@
 """Routes for the app."""
 
 import datetime as dt
-
+import smtplib
 from flask import Flask, redirect, url_for, request, render_template, session
 
 import data_query as db
+
 
 
 
@@ -155,6 +156,7 @@ def new_need():
     session['user']['last_insert_need_id'] = db.insert_need(
         request.form.to_dict())
 
+    #send_mail()
     return redirect(url_for('get_needs'), code=302)
 
 @app.route('/needs/delete/<need_id>', methods=['GET', 'POST'])
@@ -164,6 +166,18 @@ def delete_need(need_id):
         return redirect(url_for('get_needs'))
     return "Not implemented yet", 404
 
+def send_mail():
+    print("PASSE PAR LA")
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login("workshop.epsi.btrois@gmail.com", "Azqswx21!")
+
+    msg = "Creation d'un nouveau besoin à votre nom. Vous pouvez le retrouver dans la liste de vos besoins."
+    try:
+        server.sendmail("workshop.epsi.btrois@gmail.com", "workshop.epsi.btrois@gmail.com", msg)
+    except:
+        print("Impossible d'envoyer le mail!")
+    server.quit()
 
 if __name__ == '__main__':
     app.run(debug=True)

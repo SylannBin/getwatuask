@@ -11,7 +11,7 @@ Snap-AT - New Need
 
 	<header>
         <img src="{{ url_for('static', filename='img/GFI-logo.png') }}">
-        <span id="spanName">{{ user.firstname }} - New Project</span>
+        <span id="spanName">{{ user.firstname + " " + user.lastname }} - New Project</span>
 	</header>
 
 	<a href="{{ url_for('get_needs') }}">
@@ -24,7 +24,7 @@ Snap-AT - New Need
 		<legend>New need registration</legend>
 		<input type="hidden" name="creation_date" value="{{ params.today }}" placeholder="creationDate"><br>
 		<input type="hidden" name="user_id" value="{{ params.user_id }}"><br>
-		<input type="hidden" name="consultant_name" value="{{ params.consultant_name }}"><br>
+{#		<input type="hidden" name="consultant_name" value="{{ params.consultant_name }}"><br>#}
 
 		<input type="text" id="title" name="title" placeholder="Title" value=""><br>
 		<input type="text" id="description" name="description" placeholder="Description" value=""><br>
