@@ -191,25 +191,40 @@ def get_need_by_id(need_id):
     return need
 
 
-def insert_need(title, description, creation_date, latest_date, month_duration,
-                day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
+def get_clients():
     with create_connection() as conn:
         cur = conn.cursor()
-
         try:
-            cur.execute("SELECT max(need_id) FROM need")
-            max_id = [int(record[0]) for record in cur.fetchall()][0] + 1
-            print("MAX : ", max_id)
+            cur.execute("SELECT client_id, c_name FROM client")
+            clients = cur.fetchall()
+        except Error as e:
+            print("select_clients : ", e)
+            return None
+        return clients
 
-            cur.execute("INSERT INTO need (need_id, title, description, creation_date, latest_date, "
-                        "month_duration, day_duration, price_ht, consultant_name, client_id, "
-                        "status_id, active, user_id, key_factors) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, TRUE, %s, %s)",
-                        (max_id, title, description, creation_date, latest_date, month_duration,
-                         day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors))
+
+def insert_need(new_need):
+    with create_connection() as conn:
+        cur = conn.cursor()
+        try:
+            cur.execute(
+                "SELECT need_id FROM need ORDER BY need_id DESC LIMIT 1")
+            max_id = [int(record[0]) for record in cur.fetchall()][0] + 1
+            new_need['need_id'] = max_id
+            new_need['active'] = True
+            print("MAX : ", max_id)
+            inserter = [(str(k), '%s', str(v)) for k, v in new_need.items()]
+            fields, place_holders, values = zip(*inserter)
+            cur.execute("INSERT INTO need (" +
+                        ", ".join(fields) +
+                        ") VALUES (" +
+                        ", ".join(place_holders) +
+                        ")", tuple(values))
         except Error as e:
             print("insert_need_query : ", e)
+            return None
 
-    return None
+    return max_id
 
 
 def update_need(need_id, description, latest_date, month_duration,
@@ -254,15 +269,4 @@ def delete_need(need_id):
 
 if __name__ == "__main__":
     pass
-    #login("valentinmele@gfi.com")
-    # get_user_by_id(1)
-    # get_client_by_id(1)
-    # get_needs_from_client(1)
-    # get_needs_from_user(1)
-    # get_filter_needs()
-    # get_need_by_id(2)
-    #insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02",
-    #            2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1, "JOLIE, BLEU, RAPIDE")
-    # update_need()
-    # delete_need()
-    get_id_client_by_client_name("IDRAC")
+
