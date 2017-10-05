@@ -10,6 +10,8 @@ from flask import Flask, redirect, url_for, request, render_template, session
 
 import data_query as db
 
+
+
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'Ts2V+eDAwCK/gZLoe+KhyUjgpnBrHE3yumYuuRG59Q4='
 
@@ -111,21 +113,31 @@ def edit_need(need_id=None):
             msg = "Couldn't get need N°" + need_id
             return render_template('403.html', msg=msg, route='edit_need'), 403
 
-        return render_template('need-form.html', need=need), 200
+        user = session['user']
+        client = db.get_client_by_id(need['client_id'])
 
-    # Method POST
-    # TODO: Handle form data to edit the need in db
-    request.form.get('data')
+        return render_template('edit-need.html', need=need, user=user, client=client), 200
 
-    if need is None:
-        msg = "Couldn't get need N°{}".format(need_id)
-        return render_template('403.html', msg=msg, route='edit_need'), 403
+    elif request.method == 'POST':
+        description = request.form.get('description')
+        consultant_name = request.form.get('consultant_name')
+        keys = request.form.get('keys')
+        latest_date = request.form.get('dueDate')
+        month = request.form.get('month')
+        day = request.form.get('day')
+        price_ht = request.form.get('price_ht')
+        status_id = request.form.get('selectStatus')
 
-    return "Not implemented yet", 404
+        need = db.get_need_by_id(need_id)
+        print("EDIT-NEED before edit : ", need)
+        db.update_need(need_id, description, latest_date, month, day, price_ht, consultant_name, status_id, keys)
+
+        return redirect(url_for('get_needs'))
+    else:
+        return "Not implemented yet", 404
 
 
-# GET Argument: manager_name
-# POST body: 'NEED' form data
+
 @app.route('/needs/new', methods=['GET', 'POST'])
 def new_need():
     if request.method == 'GET':
@@ -134,6 +146,13 @@ def new_need():
                   'date': dt.date.today()}
         return render_template('need-form.html', params=params), 200
     # TODO: Handle form data to create a new need in db
+    return "Not implemented yet", 404
+
+@app.route('/needs/delete/<need_id>', methods=['GET', 'POST'])
+def delete_need(need_id):
+    if request.method == 'POST':
+        db.delete_need(need_id)
+        return redirect(url_for('get_needs'))
     return "Not implemented yet", 404
 
 

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}
+Snap-AT - Need-Form
+{% endblock %}
+
+{% block cssPLUS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/screen3.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <header>
+        <img src="{{ url_for('static', filename='img/GFI-logo.png') }}">
+        <span id="spanName"><span>{{ user.firstname + " " + user.lastname }} - {{ need.title }}</span></span>
+    </header>
+
+	<a href="{{ url_for('get_needs') }}"> BACK
+		<div class="returnBackArrow">
+			<span class="glyphicon glyphicon-arrow-left"></span>
+		</div>
+	</a>
+
+	<form method="post" action="{{ url_for('edit_need', need_id=need.need_id) }}" enctype="multipart/form-data">
+		<legend>Edit an existing need</legend>
+		<input type="text" id="companysName" name="client_name" placeholder="CompanysName" value="{{ client.name }}" readonly><br>
+		<textarea type="text" id="consultantName" name="consultant_name"
+                  placeholder="ConsultantName">{{ need.consultant_name }} </textarea><br>
+		<input type="text" id="consultantMail" name="client_mail" placeholder="consultantMail" value="{{ client.mail }}" readonly><br>
+		<input type="text" id="consultantNumber" name="client_tel"
+               placeholder="consultantNumber" value="{{ client.phone }}" readonly><br>
+		<textarea name="description" id="descriptionOfTheProject" placeholder="descriptionOfTheProject">{{ need.description }}</textarea><br>
+		<textarea type="text" id="keys" name="keys"
+                  placeholder="KeyFactors"> {{ need.key_factors }}</textarea><br>
+		<label for="initialDate">Creation date</label><br>
+		<input type="date" class="inputDates" id="initialDate" name="initialDate"
+               value="{{ need.creation_date }}" readonly><span for="initialDate" id="initialDatePicker"
+                                                      class="glyphicon glyphicon-calendar"></span><br>
+		<label for="dueDate">Latest date</label><br>
+		<input type="date" class="inputDates" id="dueDate" name="dueDate"
+               value="{{ need.latest_date }}"><span for="dueDate" id="initialDatePicker"
+                                                      class="glyphicon glyphicon-calendar"></span><br>
+        <label for="month">Month duration</label><br>
+        <input type="number" id="month" name="month" value="{{ need.month_duration }}"><br>
+        <label for="day">Days/week</label><br>
+        <input type="number" id="day" name="day" value="{{ need.day_duration }}"><br>
+
+		<input type="text" id="place" name="place" placeholder="Location" value="{{ client.city }}" readonly><br>
+		<label for="number">HT Price <span class="euroDevise"></span></label>
+		<input type="number" id="number" name="price_ht" value="{{ need.price_ht }}"><br>
+		<label for="attachedFile">Upload file</label><br>
+        <!-- A FAIRE -->
+		<input type="file" id="attachedFile" name="attachedFile" value="joindreUnFichier"><br>
+		<label for="selectStatus">Select need's status</label><br>
+		<select id="selectStatus" name="selectStatus">
+			<option selected="selected" value="1">Open</option>
+			<option value="2">Win</option>
+			<option value="3">Lost</option>
+		</select><br>
+		<input type="submit" id="send">
+	</form>
+
+
+
+    <form method="post" action="{{ url_for('delete_need', need_id=need.need_id) }}" enctype="multipart/form-data">
+        <input type="submit" id="cancel" value="Delete need">
+    </form>
+
+
+
+
+{% endblock %}

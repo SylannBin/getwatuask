@@ -8,8 +8,8 @@ def create_connection():
     :return: Connection object or None
     """
     try:
-        conn = connect("dbname='snapat' user='kiminonaha'"
-                       "password='md5745db04ffd8f2d15e2a3682b496f747b'")
+        conn = connect("dbname='snapat' user='postgres'"
+                       "password='postgres'")
         print("Conn : ", conn)
         return conn
     except Error as e:
@@ -83,6 +83,22 @@ def get_client_by_id(client_id):
 
     print(client)
     return client
+
+def get_id_client_by_client_name(client_name):
+    with create_connection() as conn:
+        cur = conn.cursor()
+        try:
+            print
+            cur.execute(
+                "SELECT client_id FROM client WHERE c_name = %s", (client_name,))
+        except Error as e:
+            print("get_user_by_id : ", e)
+            return None
+
+        client_id = cur.fetchall()[0]
+
+    print(client_id[0])
+    return client_id[0]
 
 
 def get_needs_from_client(client_id):
@@ -196,27 +212,24 @@ def insert_need(title, description, creation_date, latest_date, month_duration,
     return None
 
 
-def update_need(need_id, title, description, creation_date, latest_date, month_duration,
-                day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
+def update_need(need_id, description, latest_date, month_duration,
+                day_duration, price_ht, consultant_name, status_id, key_factors):
     with create_connection() as conn:
         cur = conn.cursor()
-
+        print("PASSE PAR LE UPDATE")
         try:
-            cur.execute("UPDATE need SET title = %s, "
+            cur.execute("UPDATE need SET "
                         "description = %s ,"
-                        "date = %s, "
                         "latest_date = %s,"
                         "month_duration = %s, "
                         "day_duration = %s, "
                         "price_ht = %s, "
                         "consultant_name = %s, "
-                        "id_client = %s, "
-                        "id_status = %s, "
-                        "id_user = %s "
+                        "status_id = %s, "
                         "key_factors = %s "
                         "WHERE need_id = %s",
-                        (title, description, creation_date, latest_date, month_duration,
-                         day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors, need_id))
+                        (description, latest_date, month_duration,
+                         day_duration, price_ht, consultant_name, status_id, key_factors, need_id))
         except Error as e:
             print("update_need : ", e)
 
@@ -227,11 +240,12 @@ def delete_need(need_id):
     """ Requête permettant de passer un need en inactif (= supprimer).
     :param id_need: id du need à rendre inactif
     """
+    print("PASSE PAR DELETE NEED")
     with create_connection() as conn:
         cur = conn.cursor()
         try:
             cur.execute(
-                "UPDATE need SET active = FALSE where id_need = %s", (need_id,))
+                "UPDATE need SET active = FALSE where need_id = %s", (need_id,))
         except Error as e:
             print("delete_need_query : ", e)
 
@@ -240,14 +254,15 @@ def delete_need(need_id):
 
 if __name__ == "__main__":
     pass
-    login("valentinmele@gfi.com")
+    #login("valentinmele@gfi.com")
     # get_user_by_id(1)
     # get_client_by_id(1)
     # get_needs_from_client(1)
     # get_needs_from_user(1)
     # get_filter_needs()
     # get_need_by_id(2)
-    insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02",
-                2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1, "JOLIE, BLEU, RAPIDE")
+    #insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02",
+    #            2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1, "JOLIE, BLEU, RAPIDE")
     # update_need()
     # delete_need()
+    get_id_client_by_client_name("IDRAC")
