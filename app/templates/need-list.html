@@ -1,36 +1,77 @@
 {% extends "base.html" %}
+{% block title %}
+Snap-AT - Liste des besoins
+{% endblock %}
+
+
+
+{% block cssPLUS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/screen2.css') }}">
+{% endblock %}
+
 {% block content %}
 
-    {% if user.rights != 'client' %}
-        <div clas="header">
-            <div class="col-xs-6"> {{ user.name }}  <small>{{ user.rights }}</small> </div>
-            <div class="col-xs-6">
-                <a href="{{ url_for('new_need') }}" class="btn btn-primary">New</a>
-                <button id="filter-need" class="btn btn-primary" onclick="toggleFilterMenu()"> Filter </button>
-            </div>
-        </div>
-    {% endif %}
+    <header>
+        <img src="./img/GFI-logo.png"><span id="spanName"><span>{{ user.firstname }}</span> - <span id="spanStatus"><span>Commercial</span>
+    </header>
 
-    <h3>List of needs</h3>
-    <div class="container">
-        {% for need in needs %}
-        <div class="need-tile">
-            <div class="tile-id">Id: {{ need.id }}</div>
-            <div class="tile-clientname">Client: {{ need.clientname }}</div>
-            <div class="tile-manager">Manager: {{ need.manager }}</div>
-            <div class="tile-title">Need title: {{ need.title }}</div>
-            <div class="tile-status">Status: {{ need.status }}</div>
-            <div class="tile-date">Date: {{ need.date }}</div>
-            <div class="tile-deadline">Deadline: {{ need.deadline }}</div>
-            <div class="tile-more">More: {{ need.more }}</div>
-
-            {% if user.rights == 'client' %}
-            <a href="{{ url_for('view_need',need_id=need.id) }}" class="btn btn-primary">View</a>
-            {% else %}
-            <a href="{{ url_for('edit_need',need_id=need.id) }}" class="btn btn-primary">Edit</a>
-            {% endif %}
-        </div>
-        {% endfor %}
+    <div id="hamburger" class="closed">
+        <span class="menu-hamburger"></span>
+        <span class="menu-hamburger"></span>
+        <span class="menu-hamburger"></span>
     </div>
 
+    <a href="./screen3.html">{{ url_for('new_need', id_user=user.user_id) }}
+        <div id="addANeed">
+            <span class="menuAddANEED" id="span1"></span>
+            <span class="menuAddANEED" id="span2"></span>
+        </div>
+    </a>
+    <section id="hiddenPart">
+        <form method="get">
+            <input name="searchBar" id="searchBar" placeholder="Rechercher">
+            <a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a><br/><br/>
+            <div id="selectsButtons">
+                <input name="open" id="open" type="checkbox" value="1"><label for="open">Open</label>
+                <input name="win" id="win" type="checkbox" value="2"><label for="win">Win</label>
+                <input name="lost" id="lost" type="checkbox" value="3"><label for="lost">Lost</label><br/>
+            </div><br/>
+            <label for="initialDate">Date de demande du besoin</label><br/>
+            <input class="dates" name="initialDate" id="initialDate" type="date" input="date" placeholder="initialDate">
+            <div for="initialDate" class="divDatePicker">
+                <span for="initialDate" id="initialDatePicker" class="glyphicon glyphicon-calendar"></span>
+            </div><br/><br/>
+            <label for="dueDate">Deadline du besoin</label><br/>
+            <input class="dates" name="dueDate" id="dueDate" type="date" input="date" placeholder="dueDate">
+            <div for="dueDate" class="divDatePicker">
+                <span for="dueDate" class="glyphicon glyphicon-calendar"></span>
+            </div><br/><br/>
+            <input name="clientName" id="clientName" type="text" placeholder="Nom du client"><br/><br/>
+            <input name="titleNeed" id="titleNeed" type="text" placeholder="Titre du besoin"><br/><br/>
+            <input id="send" type="submit" value="Appliquer">
+        </form>
+    </section>
+
+    <section class="needs">
+        <div class="countNeeds"><span> {{ total }} </span> projet(s)</div>
+        {% for need in needs %}
+        <a href="{{ url_for('edit_need', need_id=need.need_id) }}">
+            <div class="need" id="test1">
+                <div class="dueDate">{{ need.creation_date }}</div>
+                <div class="needContent"><span class="databaseProject">{{ need.title }}</span><br>
+                    <span class="databaseName">{{ need.client_name }}</span><span class="databaseState">{{ need.label_status }}</span>
+                </div>
+                <div class="delays">reste<br><span>{{ need.remaining }}</span><br>jour(s)</div>
+            </div>
+        </a>
+        {% endfor %}
+    </section>
+
 {% endblock %}
+
+
+
+
+
+
+

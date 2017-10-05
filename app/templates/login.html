@@ -1,14 +1,23 @@
+
 {% extends "base.html" %}
+{% block title %}
+Snap-AT - Accueil
+{% endblock %}
+
+{% block cssPLUS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
 {% block content %}
 
-    <h3>WELCOME to SANP-AT</h3>
-
     <section class="container">
-        <form action="{{ url_for('login') }}" method="post">
-            <input type="mail" name="email" placeholder="Email address" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" value="Connect">
-        </form>
-    </section>
+		<form action="{{ url_for('login') }}" method="post">
+			<label for="inputMail" id="email">Adresse Mail :</label>
+			<input id="inputMail" name="inputMail"type="mail">
+			<label for="inputPassword" id="password">Mot de passe :</label>
+			<input id="inputPassword" name="inputPassword" type="password">
+			<input id="send" type="submit" value="Envoyer">
+		</form>
+	</section>
 
 {% endblock %}

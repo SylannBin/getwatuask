@@ -103,7 +103,7 @@ def get_needs_from_user(id_user):
     with create_connection() as conn:
         cur = conn.cursor()
         try:
-            cur.execute("SELECT c_name, title, latest_date, need.status_id, need_id FROM need "
+            cur.execute("SELECT c_name, title, latest_date, label_st, need_id, creation_date FROM need "
                         "JOIN status ON (need.status_id = status.status_id) "
                         "JOIN client ON (client.client_id = need.client_id) "
                         "JOIN utilisateur ON (utilisateur.user_id = need.user_id) "
@@ -114,18 +114,21 @@ def get_needs_from_user(id_user):
             print("get_all_needs_query : ", e)
 
         needs = [{'client_name': row[0], 'title': row[1], 'latest_date': row[2],
-                  'status_id': row[3], 'need_id': row[4]} for row in cur.fetchall()]
+                  'label_status': row[3], 'need_id': row[4], 'creation_date': row[5]} for row in cur.fetchall()]
     print(needs)
     return needs
 
 #TODO : Finish this query
-def get_filter_needs(filter):
+def get_filter_needs(filters, user_id):
     with create_connection() as conn:
         cur = conn.cursor()
         try:
-            cur.execute("SELECT * FROM need "
-                        "WHERE id_status IN (%s) "
-                        "AND active_need = '0'", filter)
+            cur.execute("SELECT c_name, title, latest_date, need.status_id, need_id FROM need "
+                        "JOIN status ON (need.status_id = status.status_id) "
+                        "JOIN client ON (client.client_id = need.client_id) "
+                        "JOIN utilisateur ON (utilisateur.user_id = need.user_id) "
+                        "WHERE need.user_id = %s " + filters +
+                        "ORDER BY need.status_id ASC, latest_date DESC", (user_id,))
         except Error as e:
             print("get_filter_needs_query : ", e)
             needs_filtered = cur.fetchall()
@@ -148,12 +151,12 @@ def get_need_by_id(need_id):
                 'creation_date': data[3], 'latest_date': data[4], 'month_duration': data[5],
                 'day_duration': data[6], 'price_ht': data[7],
                 'consultant_name': data[8], 'client_id': data[9],
-                'status_id': data[10], 'active': data[11], 'user_id': data[12]}
+                'status_id': data[10], 'active': data[11], 'user_id': data[12], 'key_factors': data[13]}
     print(need)
     return need
 
 def insert_need(title, description, creation_date, latest_date, month_duration,
-                day_duration, price_ht, consultant_name, client_id, status_id, user_id):
+                day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
     with create_connection() as conn:
         cur = conn.cursor()
 
@@ -164,16 +167,16 @@ def insert_need(title, description, creation_date, latest_date, month_duration,
 
             cur.execute("INSERT INTO need (need_id, title, description, creation_date, latest_date, "
                     "month_duration, day_duration, price_ht, consultant_name, client_id, "
-                    "status_id, active, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, TRUE, %s)",
+                    "status_id, active, user_id, key_factors) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, TRUE, %s, %s)",
                         (max_id, title, description, creation_date, latest_date, month_duration,
-                        day_duration, price_ht, consultant_name, client_id, status_id, user_id))
+                        day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors))
         except Error as e:
             print("insert_need_query : ", e)
 
     return None
 
-def update_need(title, description, creation_date, latest_date, month_duration,
-                      day_duration, price_ht, consultant_name, client_id, status_id, user_id):
+def update_need(need_id, title, description, creation_date, latest_date, month_duration,
+                      day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors):
     with create_connection() as conn:
         cur = conn.cursor()
 
@@ -189,9 +192,10 @@ def update_need(title, description, creation_date, latest_date, month_duration,
                         "id_client = %s, "
                         "id_status = %s, "
                         "id_user = %s "
-                        "WHERE id = %s",
+                        "key_factors = %s "
+                        "WHERE need_id = %s",
                         (title, description, creation_date, latest_date, month_duration,
-                      day_duration, price_ht, consultant_name, client_id, status_id, user_id, need_id))
+                      day_duration, price_ht, consultant_name, client_id, status_id, user_id, key_factors, need_id))
         except Error as e:
             print("update_need : ", e)
 
@@ -219,7 +223,7 @@ if __name__ == "__main__":
     #get_needs_from_user(1)
     #get_filter_needs()
     #get_need_by_id(2)
-    #insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02", 2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1)
+    insert_need("TEST INSERT", "CECI EST UN TEST", "2017-10-21", "2017-11-02", 2, 1, 5157.25, "CONSULTANT NAME TESTI", 1, 1, 1, "JOLIE, BLEU, RAPIDE")
     #update_need()
     #delete_need()
 

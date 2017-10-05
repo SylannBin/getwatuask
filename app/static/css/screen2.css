@@ -1,26 +1,144 @@
-#hidedPart{
+header{
+	position: fixed;
+	height: 70px;
+	width: 100%;
+	background-color: black;
+	top: 0;
+	font-size: 25px;
+	padding-left: 140px;
+	color: #50575F;
+	z-index: 1;
+}
+
+header img{
+	height: 70px;
+	margin-bottom: 12px;
+}
+
+#hamburger{
+	z-index: 2;
+	position: fixed;
+	left: 0%;
+	top:0%;
+	padding:20px 3px;
 	background-color: rgba(0, 0, 0, 0.8);
+	width: 120px;
+	text-align: center;
+	border-bottom-right-radius:20px; 
+}
+
+#hamburger span{
+	background-color: white;
+	width: 60%;
+	text-align: center;
+	height: 6px;
+	margin: 10px auto;
+	display: block;
+}
+
+#addANeed{
+	z-index: 1;
+	position: fixed;
+	right: 8%;
+	top:0%;
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 90px;
+	height: 90px;
+	text-align: center;
+}
+
+#addANeed span{
+	position: absolute;
+	background-color: white;
+	width: 50%;
+	height: 6px;
+	margin: 10px auto;
+	display: block;
+	top: 43%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+#addANeed span#span2{
+	top: 40%;
+	left: 25%;
+	-moz-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+#hiddenPart{
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 80%;
+    position: absolute;
+    left: -80%;
+    top: 0%;
+}
+
+body{
+	background-image: url("../img/bgNeed.jpg");
+	background-size: cover;
+	background-position: right;
 }
 
 form{
 	width: 100%;
 	margin: 0 auto;
 	color: white;
-	padding: 20px 0 0 10px;
+	padding: 20px 0 0 20px;
+}
+
+form input{
+	height: 50px;
+	margin: 10px 0;
+	font-size: 24px;
+	color: black;
+}
+
+label{
+	font-size: 33px;
 }
 
 #searchBar{
-	width:80%;
-	height:30px;
+	width:85%;
 	margin-left: 0px;
+}
+
+form .dates{
+	width: 80%;
+	height: 50px;
+}
+
+form input#clientName{
+	width: 80%;
+}
+
+form input#titleNeed{
+	width: 80%;
 }
 
 form .glyphicon-search{
 	width: 5%;
-	font-size: 25px;
+	font-size: 33px;
 	text-align: center;
-	padding: 20px 2px 2px 2px;
+	padding: 33px 2px 2px 2px;
 	position: absolute;
+}
+
+form .glyphicon-calendar{
+	top: 50%;
+	font-size: 30px;
+	position: absolute;
+	margin-left: 24px;
+	transform: translate(-50%,-50%);
+}
+
+form .divDatePicker{
+	display: inline;
+	position: relative;
 }
 
 form a{
@@ -28,8 +146,130 @@ form a{
 }
 
 #selectsButtons {
-	margin-left: 50px;
+	margin-left: 40px;
 }
+
 #selectsButtons label{
-	margin: 0 70px 0 5px;
+	margin: 0 40px 0 20px;
+}
+
+input[type="checkbox"]{
+	width: 25px;
+	height: 25px;
+}
+input[type="checkbox"]:checked{	
+	border: 1px solid #FF851F;
+	outline: 1px solid #FF851F;
+}
+
+input[type="checkbox"]:checked:focus{
+	border: 1px solid #FF851F;
+	outline: 1px solid #FF851F;
+}
+
+form input#send{
+	width: 180px;
+	margin-right: 15%;
+	margin-top: 40px;
+	text-align: center;
+	font-size: 27px;
+	padding: 5px 3px;
+	border-radius: 5px;
+	font-weight: bold;
+	border-bottom: 2px solid #FF851F;
+	border-right: 2px solid #FF851F;
+	color: #FFFCFF;
+	height: 50px;
+	text-transform: uppercase;
+	text-shadow: 2px 1px #888888;
+	background-color: rgba(0, 0, 0, 0.3);
+	position: absolute;
+    right: 5%;
+}
+
+form input#send:focus{
+	display: none;
+}
+
+
+.needs{
+	z-index: 0;
+	position: relative;
+	text-align: center;
+	width: 85%;
+	margin: 140px auto 20px auto;
+}
+
+.need{
+	background-color: #E1E1E1;
+	border-radius: 5px;
+	margin: 30px 0;
+	position: relative;
+	height: 130px;
+}
+
+.needs .countNeeds{
+	background-color: #E1E1E1;
+	border-radius: 5px;
+	margin: 30px 0 30px auto;
+	position: relative;
+	height: 60px;
+	width: 25%;
+    color: #A39593;
+    font-size: 30px;
+}
+
+.needs .countNeeds span{
+	color: #FF851F;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.dueDate{
+	position: absolute;
+	width: 90px;
+	top: 50%;
+	left: 50px;
+	transform:translate(-50%,-50%);
+	height: 90%;
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+	line-height: 58px;
+	text-align: center;
+	background-color: #FF851F;
+}
+
+.needContent{
+	position: absolute;
+	text-align: left;
+	left: 110px;
+	bottom: 15px;
+	font-size: 30px;
+	color: #968A87;
+}
+
+.databaseName:after{
+	content:" - ";
+}
+
+.databaseProject{
+	font-weight: bold;
+	color: #574F4E;
+}
+
+.delays{
+	top: 5px;
+	text-transform: uppercase;
+	position: absolute;
+	right: 30px;
+	font-size: 30px;
+	font-weight: bold;
+	color: #A39593;
+	line-height: 40px;
+}
+
+.delays span{
+	color: #FF851F;
+	font-size: 50px;
 }

@@ -1,0 +1,62 @@
+body{
+    background-image: url("../img/fond.jpg");
+    background-size: cover;
+}
+
+form{
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+}
+
+form label{
+    display: block;
+    margin: 35px 0;
+    color: #FFFCFF;
+    height: 20px;
+    font-size:30px;
+    text-transform: uppercase;
+    text-shadow: 2px 1px #888888;
+}
+
+form input:focus{
+    outline-color: #FF851F;
+}
+
+form input{
+    display: block;
+    width: 70%;
+    height: 40px;
+    margin: 20px auto 50px auto;
+    background-color: rgba(255,255,255,0.4);
+}
+
+form input#send{
+    width: 180px;
+    margin-right: 15%;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 27px;
+    padding: 5px 3px;
+    border-radius: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid #FF851F;
+    border-right: 2px solid #FF851F;
+    color: #FFFCFF;
+    height: 50px;
+    text-transform: uppercase;
+    text-shadow: 2px 1px #888888
+}
+
+form input#send{
+    background-color: rgba(0, 0, 0, 0.3);
+
+}
+
+form input#send:focus{
+    display: none;
+}
