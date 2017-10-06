@@ -134,6 +134,28 @@ span.dollarsDevise:before{
 
 input#send{
 	width: 20%;
+	min-width: 165px;
+	margin-right: 15%;
+	display: inline-block;
+	position: absolute;
+	right: 0%;
+	text-align: center;
+	font-size: 27px;
+	padding: 5px 3px;
+	border-radius: 5px;
+	font-weight: bold;
+	border-bottom: 2px solid #FF851F;
+	border-right: 2px solid #FF851F;
+	color: #FFFCFF;
+	height: 50px;
+	text-transform: uppercase;
+	text-shadow: 2px 1px #888888;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+input#cancel{
+	width: 20%;
+	min-width: 200px;
 	margin-right: 15%;
 	display: inline-block;
 	position: absolute;
