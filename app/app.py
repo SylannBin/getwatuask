@@ -11,10 +11,9 @@ from flask import Flask, redirect, url_for, request, render_template, session
 import data_query as db
 
 
-
-
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'Ts2V+eDAwCK/gZLoe+KhyUjgpnBrHE3yumYuuRG59Q4='
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
 @app.route('/')
@@ -59,12 +58,15 @@ def get_needs():
         msg = "Couldn't get user N°{}".format(user_id)
         return render_template('403.html', msg=msg, route='get_needs'), 403
 
-    args = {}
-    args['states'] = request.form.get('state')
-    args['create_date'] = request.form.get('initialDate')
-    args['latest_date'] = request.form.get('dueDate')
-    args['client_name'] = request.form.get('clientName')
-    args['title_need'] = request.form.get('titleNeed')
+    args = {'states': list()}
+    args['states'].append(request.form.get('open'))
+    args['states'].append(request.form.get('win'))
+    args['states'].append(request.form.get('lost'))
+
+    args['min_date'] = request.form.get('min_date')
+    args['max_date'] = request.form.get('max_date')
+    args['client_name'] = request.form.get('client_name')
+    args['title'] = request.form.get('title')
 
     needs = db.get_needs_from_user(user_id, args)
 
@@ -131,12 +133,12 @@ def edit_need(need_id=None):
 
         need = db.get_need_by_id(need_id)
         print("EDIT-NEED before edit : ", need)
-        db.update_need(need_id, description, latest_date, month, day, price_ht, consultant_name, status_id, keys)
+        db.update_need(need_id, description, latest_date, month,
+                       day, price_ht, consultant_name, status_id, keys)
 
         return redirect(url_for('get_needs'))
     else:
         return "Not implemented yet", 404
-
 
 
 @app.route('/needs/new', methods=['GET', 'POST'])
@@ -156,8 +158,9 @@ def new_need():
     session['user']['last_insert_need_id'] = db.insert_need(
         request.form.to_dict())
 
-    #send_mail()
+    # send_mail()
     return redirect(url_for('get_needs'), code=302)
+
 
 @app.route('/needs/delete/<need_id>', methods=['GET', 'POST'])
 def delete_need(need_id):
@@ -165,6 +168,7 @@ def delete_need(need_id):
         db.delete_need(need_id)
         return redirect(url_for('get_needs'))
     return "Not implemented yet", 404
+
 
 def send_mail():
     print("PASSE PAR LA")
@@ -174,10 +178,12 @@ def send_mail():
 
     msg = "Creation d'un nouveau besoin à votre nom. Vous pouvez le retrouver dans la liste de vos besoins."
     try:
-        server.sendmail("workshop.epsi.btrois@gmail.com", "workshop.epsi.btrois@gmail.com", msg)
+        server.sendmail("workshop.epsi.btrois@gmail.com",
+                        "workshop.epsi.btrois@gmail.com", msg)
     except:
         print("Impossible d'envoyer le mail!")
     server.quit()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

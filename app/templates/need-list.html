@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Snap-AT - Liste des besoins
+Snap-AT - Needs List
 {% endblock %}
 
 {% block cssPLUS %}
@@ -28,39 +28,39 @@ Snap-AT - Liste des besoins
     </a>
     <section id="hiddenPart">
         <form action="{{ url_for('get_needs') }}" method="post">
-            <input name="search_bar" id="searchBar" placeholder="Rechercher">
+            <input name="search_bar" id="searchBar" placeholder="Filter">
             <a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a><br/><br/>
             <div id="selectsButtons">
-                <input name="state" id="open" type="checkbox" value="1"><label for="open">Open</label>
-                <input name="state" id="win" type="checkbox" value="2"><label for="win">Win</label>
-                <input name="state" id="lost" type="checkbox" value="3"><label for="lost">Lost</label><br/>
+                <input name="open" id="open" type="checkbox" value="1"><label for="open">Open</label>
+                <input name="win" id="win" type="checkbox" value="2"><label for="win">Win</label>
+                <input name="lost" id="lost" type="checkbox" value="3"><label for="lost">Lost</label><br/>
             </div><br/>
-            <label for="initialDate">Date de demande du besoin</label><br/>
-            <input class="dates" name="creation_date" id="initialDate" type="date" placeholder="initialDate">
+            <label for="initialDate">Min date of need creation</label><br/>
+            <input class="dates" name="creation_date" id="initialDate" type="date" placeholder="Min date">
             <div for="initialDate" class="divDatePicker">
                 <span for="initialDate" id="initialDatePicker" class="glyphicon glyphicon-calendar"></span>
             </div><br/><br/>
-            <label for="dueDate">Deadline du besoin</label><br/>
-            <input class="dates" name="latest_date" id="dueDate" type="date" placeholder="dueDate">
+            <label for="dueDate">Max release date fo need</label><br/>
+            <input class="dates" name="latest_date" id="dueDate" type="date" placeholder="Max date">
             <div for="dueDate" class="divDatePicker">
                 <span for="dueDate" class="glyphicon glyphicon-calendar"></span>
             </div><br/><br/>
-            <input name="client_name" id="clientName" type="text" placeholder="Nom du client"><br/><br/>
-            <input name="title" id="titleNeed" type="text" placeholder="Titre du besoin"><br/><br/>
-            <input id="send" type="submit" value="Appliquer">
+            <input name="client_name" id="clientName" type="text" placeholder="Client name"><br/><br/>
+            <input name="title" id="titleNeed" type="text" placeholder="Need title"><br/><br/>
+            <input id="send" type="submit" value="Apply">
         </form>
     </section>
 
     <section class="needs">
-        <div class="countNeeds"><span> {{ total }} </span> projet(s)</div>
+        <div class="countNeeds"><span> {{ total }} </span> project(s)</div>
         {% for need in needs %}
         <a href="{{ url_for('edit_need', need_id=need.need_id) }}">
             <div class="need" id="test1">
                 <div class="dueDate">{{ need.creation_date.strftime('%Y %b %d') }}</div>
                 <div class="needContent"><span class="databaseProject">{{ need.title }}</span><br>
-                    <span class="databaseName">{{ need.client_name }}</span><span class="databaseState">{{ need.label_status }}</span>
+                    <span class="databaseName">{{ need.client_name }}</span><span class="databaseState">{{ need.label_st }}</span>
                 </div>
-                <div class="delays">reste<br><span>{{ need.remaining }}</span><br>jour(s)</div>
+                <div class="delays">Due in <br><span>{{ need.remaining }}</span><br>day(s)</div>
             </div>
         </a>
         {% endfor %}

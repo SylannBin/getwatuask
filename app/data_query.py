@@ -8,8 +8,9 @@ def create_connection():
     :return: Connection object or None
     """
     try:
-        conn = connect("dbname='snapat' user='postgres'"
-                       "password='postgres'")
+        with open('connection_string', 'rt') as f:
+            connection_string = f.read()
+        conn = connect(connection_string)
         print("Conn : ", conn)
         return conn
     except Error as e:
@@ -84,6 +85,7 @@ def get_client_by_id(client_id):
     print(client)
     return client
 
+
 def get_id_client_by_client_name(client_name):
     with create_connection() as conn:
         cur = conn.cursor()
@@ -147,7 +149,7 @@ def get_needs_from_user(id_user, args=None):
             'client_name': row[0],
             'title': row[1],
             'latest_date': row[2],
-            'label_status': row[3],
+            'label_st': row[3],
             'need_id': row[4],
             'creation_date': row[5]} for row in datalist]
     return needs
@@ -158,16 +160,17 @@ def get_filters(args):
     if args is None:
         return filters
     if args['states']:
-        filters += " AND need.status_id IN ({})".format(
-            ", ".join(args['states']))
-    if args.get('create_date'):
-        filters += " AND creation_date = '{}'".format(args['create_date'])
-    if args.get('latest_date'):
-        filters += " AND latest_date = '{}'".format(args['latest_date'])
+        states = [arg for arg in args['states'] if arg is not None]
+        if len(states) != 0:
+            filters += " AND need.status_id IN ({})".format(", ".join(states))
+    if args.get('min_date'):
+        filters += " AND creation_date >= '{}'".format(args['min_date'])
+    if args.get('max_date'):
+        filters += " AND latest_date <= '{}'".format(args['max_date'])
     if args.get('client_name'):
         filters += " AND c_name ILIKE '%{}%'".format(args['client_name'])
-    if args.get('title_need'):
-        filters += " AND title ILIKE '%{}%'".format(args['title_need'])
+    if args.get('title'):
+        filters += " AND title ILIKE '%{}%'".format(args['title'])
     return filters
 
 
@@ -269,4 +272,3 @@ def delete_need(need_id):
 
 if __name__ == "__main__":
     pass
-
