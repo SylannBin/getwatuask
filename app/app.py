@@ -77,7 +77,7 @@ def get_needs():
     for need in needs:
         need['remaining'] = (need['latest_date'] - need['creation_date']).days
 
-    return render_template('need-list.html', user=user, needs=needs, total=len(needs)), 200
+    return render_template('need-list.html', user=user, needs=needs, clients=db.get_clients(), total=len(needs)), 200
 
 
 @app.route('/client/<client_id>/<need_id>/<qr_code_salt>')
@@ -141,6 +141,12 @@ def edit_need(need_id=None):
         return "Not implemented yet", 404
 
 
+def camelcasify(string):
+    words = [word.title() if i != 0 else word
+             for i, word in enumerate(string.split(' '))]
+    return "".join(words)
+
+
 @app.route('/needs/new', methods=['GET', 'POST'])
 def new_need():
     if request.method == 'GET':
@@ -149,14 +155,16 @@ def new_need():
                   'today': dt.date.today()}
 
         clients = db.get_clients()
-        params['clients'] = clients if clients else []
+        params['clients'] = clients
         user = session['user']
 
         return render_template('new-need.html', params=params, user=user), 200
 
     # Method POST:
-    session['user']['last_insert_need_id'] = db.insert_need(
-        request.form.to_dict())
+    new_need = request.form.to_dict()
+    if 'title' in new_need:
+        new_need['title'] = camelcasify(new_need['title'])
+    session['user']['last_insert_need_id'] = db.insert_need(new_need)
 
     # send_mail()
     return redirect(url_for('get_needs'), code=302)

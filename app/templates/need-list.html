@@ -45,7 +45,10 @@ Snap-AT - Needs List
             <div for="dueDate" class="divDatePicker">
                 <span for="dueDate" class="glyphicon glyphicon-calendar"></span>
             </div><br/><br/>
-            <input name="client_name" id="clientName" type="text" placeholder="Client name"><br/><br/>
+            <label for="client_name">Client Name</label><br>
+            <select name="client_name" id="client_name">
+                {% for client in clients %}<option value="{{ client[1] }}">{{ client[1] }}</option>{% endfor %}
+            </select><br/><br/>
             <input name="title" id="titleNeed" type="text" placeholder="Need title"><br/><br/>
             <input id="send" type="submit" value="Apply">
         </form>
@@ -57,8 +60,10 @@ Snap-AT - Needs List
         <a href="{{ url_for('edit_need', need_id=need.need_id) }}">
             <div class="need" id="test1">
                 <div class="dueDate">{{ need.creation_date.strftime('%Y %b %d') }}</div>
-                <div class="needContent"><span class="databaseProject">{{ need.title }}</span><br>
-                    <span class="databaseName">{{ need.client_name }}</span><span class="databaseState">{{ need.label_st }}</span>
+                <div class="needContent">
+                    <span class="databaseProject">{{ need.title }}</span><br>
+                    <span class="databaseName">{{ need.client_name }}</span>
+                    <span class="databaseState">{{ need.label_st }}</span>
                 </div>
                 <div class="delays">Due in <br><span>{{ need.remaining }}</span><br>day(s)</div>
             </div>

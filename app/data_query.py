@@ -168,7 +168,7 @@ def get_filters(args):
     if args.get('max_date'):
         filters += " AND latest_date <= '{}'".format(args['max_date'])
     if args.get('client_name'):
-        filters += " AND c_name ILIKE '%{}%'".format(args['client_name'])
+        filters += " AND c_name = '{}'".format(args['client_name'])
     if args.get('title'):
         filters += " AND title ILIKE '%{}%'".format(args['title'])
     return filters
@@ -202,7 +202,7 @@ def get_clients():
             clients = cur.fetchall()
         except Error as e:
             print("select_clients : ", e)
-            return None
+            return []
         return clients
 
 
