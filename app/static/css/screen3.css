@@ -36,6 +36,14 @@ a#linkToBack{
 	color: #FF851F;
 }
 
+#linkToPrint{
+	position: absolute;
+    display: inline-block;
+    top: 80px;
+    right: 25px;
+	color: #FF851F;
+}
+
 .returnBackArrow .glyphicon{
 	font-size: 35px;
 }

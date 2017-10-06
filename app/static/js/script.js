@@ -41,4 +41,9 @@ $(document).ready(function(){
   	alert("This project has been deleted.")
   });
 
+  $("#linkToPrint").click(function(){
+  	alert("Printer : The file has been added to the queue.");
+  	window.location.href= "../../needs"
+  });
+
 })

@@ -20,6 +20,10 @@ Snap-AT - Need-Form
 		</div>
 	</a>
 
+	<div class="returnBackArrow" id="linkToPrint">
+		<span class="glyphicon glyphicon-print"></span>
+	</div>
+
 	<form method="post" action="{{ url_for('edit_need', need_id=need.need_id) }}" enctype="multipart/form-data">
 		<legend>Edit an existing need</legend>
 		<input type="text" id="companysName" name="client_name" placeholder="CompanysName" value="{{ client.name }}" readonly><br>
