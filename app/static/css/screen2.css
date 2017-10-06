@@ -8,27 +8,28 @@ header{
 	width: 100%;
 	background-color: black;
 	top: 0;
-	font-size: 25px;
-	padding-left: 140px;
+	font-size: 1em;
+	padding-left: 60px;
+	padding-top: 15px;
 	color: #50575F;
 	z-index: 1;
 }
 
 header img{
-	height: 70px;
+	height: 40px;
 	margin-bottom: 12px;
 }
 
 #hamburger{
 	z-index: 2;
-	position: fixed;
-	left: 0%;
-	top:0%;
-	padding:20px 3px;
-	background-color: rgba(0, 0, 0, 0.8);
-	width: 120px;
-	text-align: center;
-	border-bottom-right-radius:20px; 
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    padding: 14px 3px;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 60px;
+    text-align: center;
+    border-bottom-right-radius: 20px;
 }
 
 #hamburger span{
@@ -36,18 +37,18 @@ header img{
 	width: 60%;
 	text-align: center;
 	height: 6px;
-	margin: 10px auto;
+	margin: 6px auto;
 	display: block;
 }
 
 #addANeed{
 	z-index: 1;
 	position: fixed;
-	right: 8%;
+	right: 0%;
 	top:0%;
 	background-color: rgba(0, 0, 0, 0.8);
-	width: 90px;
-	height: 90px;
+	width: 70px;
+	height: 70px;
 	text-align: center;
 }
 
@@ -64,7 +65,7 @@ header img{
 }
 
 #addANeed span#span2{
-	top: 40%;
+	top: 37%;
 	left: 25%;
 	-moz-transform: rotate(90deg);
 	-ms-transform: rotate(90deg);
@@ -77,9 +78,9 @@ header img{
 	z-index: 1;
 	background-color: rgba(0, 0, 0, 0.8);
 	width: 80%;
-    position: absolute;
     left: -80%;
     top: 0%;
+    position: fixed;
 }
 
 body{
@@ -97,24 +98,28 @@ form{
 }
 
 form input{
-	height: 50px;
+	height: 30px;
 	margin: 10px 0;
-	font-size: 24px;
+	font-size: 0.8em;
 	color: black;
 }
 
 label{
-	font-size: 33px;
+	font-size: 0.8em;
+}
+
+#searchBarSpan{
+	width: 100%
 }
 
 #searchBar{
-	width:85%;
+	width:78%;
 	margin-left: 0px;
 }
 
 form .dates{
 	width: 80%;
-	height: 50px;
+	height: 30px;
 }
 
 form input#clientName{
@@ -126,11 +131,11 @@ form input#titleNeed{
 }
 
 form .glyphicon-search{
-	width: 5%;
-	font-size: 33px;
-	text-align: center;
-	padding: 33px 2px 2px 2px;
-	position: absolute;
+	width: 13%;
+    font-size: 33px;
+    text-align: center;
+    padding: 26px 2px 2px 9px;
+    position: absolute;
 }
 
 form .glyphicon-calendar{
@@ -150,12 +155,13 @@ form a{
 	color:white;
 }
 
-#selectsButtons {
-	margin-left: 40px;
+#selectsButtons label{
+	margin: 0 10px;
 }
 
-#selectsButtons label{
-	margin: 0 40px 0 20px;
+select{
+	background-color: white;
+	border-radius: 0px;
 }
 
 input[type="checkbox"]{
@@ -173,22 +179,21 @@ input[type="checkbox"]:checked:focus{
 }
 
 form input#send{
-	width: 180px;
-	margin-right: 15%;
-	margin-top: 40px;
-	text-align: center;
-	font-size: 27px;
-	padding: 5px 3px;
-	border-radius: 5px;
-	font-weight: bold;
-	border-bottom: 2px solid #FF851F;
-	border-right: 2px solid #FF851F;
-	color: #FFFCFF;
-	height: 50px;
-	text-transform: uppercase;
-	text-shadow: 2px 1px #888888;
-	background-color: rgba(0, 0, 0, 0.3);
-	position: absolute;
+	width: 90px;
+    margin-right: 15%;
+    text-align: center;
+    font-size: 1em;
+    padding: 0px 3px;
+    border-radius: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid #FF851F;
+    border-right: 2px solid #FF851F;
+    color: #FFFCFF;
+    height: 30px;
+    text-transform: uppercase;
+    text-shadow: 2px 1px #888888;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
     right: 5%;
 }
 
@@ -197,24 +202,25 @@ form input#send{
 	position: relative;
 	text-align: center;
 	width: 85%;
-	margin: 140px auto 20px auto;
+	margin: 85px auto 20px auto;
 }
 
 .need{
 	background-color: #E1E1E1;
-	border-radius: 5px;
-	margin: 30px 0;
-	position: relative;
-	height: 130px;
+    border-radius: 5px;
+    margin: 15px 0;
+    position: relative;
+    height: 90px;
 }
 
 .needs .countNeeds{
 	background-color: #E1E1E1;
 	min-width: 164px;
 	border-radius: 5px;
-	margin: 30px 0 30px auto;
+    margin-right: 0px;
+    margin-left: auto;
 	position: relative;
-	height: 60px;
+	height: 52px;
 	width: 25%;
     color: #A39593;
     font-size: 30px;
@@ -222,34 +228,34 @@ form input#send{
 
 .needs .countNeeds span{
 	color: #FF851F;
-    font-size: 40px;
+    font-size: 33px;
     font-weight: bold;
 }
 
 .dueDate{
 	position: absolute;
-	width: 90px;
-	top: 50%;
-	left: 50px;
-	transform:translate(-50%,-50%);
-	height: 90%;
-	font-size: 1.3em;
-	font-weight: bold;
-	color: white;
-	line-height: 58px;
-	text-align: center;
-	background-color: #FF851F;
+    width: 71px;
+    top: 50%;
+    left: 41px;
+    transform: translate(-50%,-50%);
+    height: 90%;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: white;
+    line-height: 42px;
+    text-align: center;
+    background-color: #FF851F;
 }
 
 .needContent{
 	position: absolute;
-	text-align: left;
-	left: 110px;
-	bottom: 15px;
-	font-size: 30px;
-	color: #968A87;
-	max-width: 60%;
-	line-height: 1em;
+    text-align: left;
+    left: 84px;
+    bottom: 12px;
+    font-size: 1.2em;
+    color: #968A87;
+    max-width: 60%;
+    line-height: 1em;
 }
 
 .databaseName:after{
@@ -263,16 +269,16 @@ form input#send{
 
 .delays{
 	top: 5px;
-	text-transform: uppercase;
-	position: absolute;
-	right: 30px;
-	font-size: 1.6em;
-	font-weight: bold;
-	color: #A39593;
-	line-height: 40px;
+    text-transform: uppercase;
+    position: absolute;
+    right: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #A39593;
+    line-height: 26px;
 }
 
 .delays span{
 	color: #FF851F;
-	font-size: 1.7em;
+    font-size: 1.3em;
 }

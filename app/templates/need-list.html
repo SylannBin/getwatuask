@@ -28,8 +28,10 @@ Snap-AT - Needs List
     </a>
     <section id="hiddenPart">
         <form action="{{ url_for('get_needs') }}" method="post">
-            <input name="search_bar" id="searchBar" placeholder="Filter">
-            <a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a><br/><br/>
+            <label id="searchBarSpan" for="searchBar">
+                <input name="search_bar" id="searchBar" placeholder="Filter">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </label><br/><br/>
             <div id="selectsButtons">
                 <input name="open" id="open" type="checkbox" value="1"><label for="open">Open</label>
                 <input name="win" id="win" type="checkbox" value="2"><label for="win">Win</label>

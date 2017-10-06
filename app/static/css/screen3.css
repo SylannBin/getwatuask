@@ -15,39 +15,40 @@ header{
 	width: 100%;
 	background-color: black;
 	top: 0;
-	font-size: 1.2em;
-	padding-left: 100px;
+	font-size: 1em;
+	padding-left: 10px;
+	padding-top: 15px;
+	overflow: hidden;
 	color: #50575F;
 	z-index: 1;
-	overflow: hidden;
 }
 
 header img{
-	height: 70px;
+	height: 40px;
 	margin-bottom: 12px;
 }
 
-.returnBackArrow{
+a#linkToBack{
 	position: absolute;
-	display: inline-block;
-	top: 100px;
-	left: 90px;
+    display: inline-block;
+    top: 76px;
+    left: 18px;
 	color: #FF851F;
 }
 
 .returnBackArrow .glyphicon{
-	font-size: 80px;
+	font-size: 35px;
 }
 
 form{
 	width: 80%;
-	margin: 120px auto 0 auto;
+	margin: 100px auto 0 auto;
 	text-align: left;
 }
 
 legend{
 	border-bottom: 0px !important;
-	font-size: 30px !important;
+	font-size: 1.2em !important;
 	text-align: center;
 	color: #E1E1E1 !important;
 	text-transform: uppercase;
@@ -56,36 +57,75 @@ legend{
 
 form input{
 	width: 100%;
-	height: 50px;
-	margin: 10px 0;
+	height: 30px;
+	margin: 5px 0 10px 0;
     color: white;
-    padding-left: 15px;
-    font-size: 24px;
+    padding-left: 5px;
+    font-size: 0.7em;
 	outline-color: #FF851F;
 	background-color: rgba(255,255,255,0.4);
 }
 
+#latest_date{
+	margin-top: 0;
+}
 
 .inputDates{
 	width: 85%;
 }
 
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: white;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: white;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: white;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: white;
+}
+
 form .glyphicon-calendar{
-	font-size: 35px;
-	color: white;
-	margin-left: 24px;
+	font-size: 14px;
+    color: white;
+    margin-left: 12px;
 }
 
 form label{
-	font-size: 30px;
+	font-size: 1em;
+	color: white;
+	margin-bottom: 0;
+}
+
+label#label_latest_date{
+	width: 100%;
+}
+
+form select{
+	margin: 10px 0;
+	font-size: 0.7em;
+	outline-color: #FF851F;
+	background-color: rgba(255,255,255,0.4);
+	border-top: 2px solid #999999; 
+	border-left: 2px solid #999999; 
+	border-bottom: 2px solid white; 
+	border-right: 2px solid white;
 	color: white;
 }
 
 form textarea{
-	height: 110px;
+	height: 60px;
 	width: 100%;
 	margin: 10px 0;
-	font-size: 25px;
+	font-size: 0.7em;
+	padding-left: 5px;
 	outline-color: #FF851F;
 	background-color: rgba(255,255,255,0.4);
 	border-top: 2px solid #999999; 
@@ -96,7 +136,7 @@ form textarea{
 }
 
 form textarea#consultantName{
-	height: 200px;
+	height: 100px;
 }
 
 select{
@@ -106,17 +146,17 @@ select{
 }
 
 form #attachedFile{
-	padding-top: 6px;
 	outline-color: #FF851F;
 	background-color: rgba(255,255,255,0.4);
 	border: 2px solid #FF851F;
 	color: white;
+
 }
 
 form #selectStatus{
 	position: relative;
-	font-size: 20px;
-	height: 50px;
+	font-size: 0.8em;
+	height: 25px;
 	color: white;
 	outline-color: #FF851F;
 	background-color: rgba(255,255,255,0.4);
@@ -134,42 +174,36 @@ span.dollarsDevise:before{
 
 input#send{
 	width: 20%;
-	min-width: 165px;
-	margin-right: 15%;
-	display: inline-block;
-	position: absolute;
-	right: 0%;
-	text-align: center;
-	font-size: 27px;
-	padding: 5px 3px;
-	border-radius: 5px;
-	font-weight: bold;
-	border-bottom: 2px solid #FF851F;
-	border-right: 2px solid #FF851F;
-	color: #FFFCFF;
-	height: 50px;
-	text-transform: uppercase;
-	text-shadow: 2px 1px #888888;
-	background-color: rgba(0, 0, 0, 0.3);
+    min-width: 165px;
+    margin-right: 15%;
+    margin-top: 20px;
+    display: inline-block;
+    position: absolute;
+    right: 0%;
+    text-align: center;
+    font-size: 0.8em;
+    padding: 5px 3px;
+    border-radius: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid #FF851F;
+    border-right: 2px solid #FF851F;
+    color: #FFFCFF;
+    height: 37px;
+    text-transform: uppercase;
+    text-shadow: 2px 1px #888888;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 input#cancel{
-	width: 20%;
-	min-width: 200px;
-	margin-right: 15%;
-	display: inline-block;
-	position: absolute;
-	right: 0%;
-	text-align: center;
-	font-size: 27px;
-	padding: 5px 3px;
-	border-radius: 5px;
-	font-weight: bold;
-	border-bottom: 2px solid #FF851F;
-	border-right: 2px solid #FF851F;
-	color: #FFFCFF;
-	height: 50px;
-	text-transform: uppercase;
-	text-shadow: 2px 1px #888888;
-	background-color: rgba(0, 0, 0, 0.3);
+	font-size: 0.8em;
+    padding: 5px 3px;
+    border-radius: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid #FF851F;
+    border-right: 2px solid #FF851F;
+    color: #FFFCFF;
+    height: 37px;
+    text-transform: uppercase;
+    text-shadow: 2px 1px #888888;
+    background-color: rgba(0, 0, 0, 0.3)
 }

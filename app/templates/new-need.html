@@ -14,7 +14,7 @@ Snap-AT - New Need
         <span id="spanName">{{ user.firstname + " " + user.lastname }} - New Project</span>
 	</header>
 
-	<a href="{{ url_for('get_needs') }}">
+	<a href="{{ url_for('get_needs') }}" id="linkToBack">
 		<div class="returnBackArrow">
 			<span class="glyphicon glyphicon-arrow-left"></span>
 		</div>
@@ -22,34 +22,35 @@ Snap-AT - New Need
 
 	<form method="post" action="{{ url_for('new_need') }}" enctype="multipart/form-data">
 		<legend>New need registration</legend>
-		<input type="hidden" name="creation_date" value="{{ params.today }}" placeholder="creationDate"><br>
-		<input type="hidden" name="user_id" value="{{ params.user_id }}"><br>
-{#		<input type="hidden" name="consultant_name" value="{{ params.consultant_name }}"><br>#}
-
-		<input type="text" id="title" name="title" placeholder="Title" value=""><br>
-		<input type="text" id="description" name="description" placeholder="Description" value=""><br>
-		<textarea name="consultant_name" id="consultant_name" placeholder="ConsultantName"></textarea><br>
-		<label for="latest_date"><input type="date" id="latest_date" name="latest_date" placeholder="Due date" value="" class="inputDates"><span class="glyphicon glyphicon-calendar"></span></label><br>
-		<input type="text" id="month_duration" name="month_duration" placeholder="Month duration" value=""><br>
-		<input type="text" id="day_duration" name="day_duration" placeholder="Day duration" value=""><br>
-		<label for="number">Value <span class="euroDevise"></span></label>
-		<input type="number" id="price_ht" name="price_ht" placeholder="Price € (HT)" value=""><br>
-		<label for="client_id">Client</label>
+		<input type="hidden" name="creation_date" value="{{ params.today }}" placeholder="creationDate">
+		<input type="hidden" name="user_id" value="{{ params.user_id }}">
+{#		<input type="hidden" name="consultant_name" value="{{ params.consultant_name }}">#}
+		<label for="client_id">Client Name : </label>
 		<select id="client_id" name="client_id">
 			{% for client in params.clients %}
 				<option value="{{ client[0] }}">{{ client[1] }}</option>
 			{% endfor%}
 		</select><br>
-		<label for="status_id">Status</label>
-		<select id="status_id" name="status_id">
+		<textarea name="consultant_name" id="consultantName" placeholder="consultantName"></textarea>
+		<input type="text" id="title" name="title" placeholder="titleOfTheProject" value=""><br>
+		<textarea type="text" id="description" name="description" placeholder="projectsDescription"></textarea><br>
+		<textarea type="text" id="key_factors" name="key_factors" placeholder="3 (comma separated) Key factors"></textarea><br>
+		<label for="latest_date" id="label_latest_date">
+			<input type="date" id="latest_date" name="latest_date" placeholder="Due date" value="" class="inputDates">
+			<span class="glyphicon glyphicon-calendar"></span>
+		</label>
+		<input type="number" id="month_duration" name="month_duration" placeholder="Month duration" value=""><br>
+		<input type="number" id="day_duration" name="day_duration" placeholder="Day duration" value=""><br>
+		<input type="number" id="price_ht" name="price_ht" placeholder="Price € (HT)" value=""><br>
+		<label for="selectStatus">Status</label>
+		<select id="selectStatus" name="status_id">
 			<option selected="selected" value="1">Open</option>
 			<option value="2">Win</option>
 			<option value="3">Lost</option>
 		</select><br>
-		<input type="text" id="key_factors" name="key_factors" placeholder="3 (comma separated) Key factors" value=""><br>
 		<input type="file" id="attachedFile" name="attachedFile"><br>
 		
-		<input id="send" type="submit" value="Register &amp; Share">
+		<input id="send" type="submit" value="Register &amp; Share" class="createButton">
 	</form>
 
 {% endblock %}

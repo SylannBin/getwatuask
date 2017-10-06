@@ -29,4 +29,16 @@ $(document).ready(function(){
 	
   });
 
+  $(".editButton").click(function(){
+  	alert("This project has been updated. An email has been sent to your professional address.")
+  });
+
+  $(".createButton").click(function(){
+  	alert("The project has been created. An email has been sent to your professional address.")
+  });
+
+  $("#cancel").click(function(){
+  	alert("This project has been deleted.")
+  });
+
 })
